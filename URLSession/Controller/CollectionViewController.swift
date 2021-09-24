@@ -11,6 +11,7 @@ enum Buttons: String, CaseIterable {
     case get = "Get"
     case post = "Post"
     case downloadImage = "Download Image"
+    case downloadFile = "Download File"
 }
 
 private let reuseIdentifier = "Cell"
@@ -19,7 +20,7 @@ class CollectionViewController: UICollectionViewController {
 
     var actions = Buttons.allCases
     let url = "https://jsonplaceholder.typicode.com/posts"
-    
+    private let dataProvider = DataProvider()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,8 +47,56 @@ class CollectionViewController: UICollectionViewController {
             NetworkManager.postRequest(url: url)
         case .downloadImage:
             performSegue(withIdentifier: "image", sender: self)
-                
+        case .downloadFile:
+            dataProvider.startDownload()
+            showAlert()
         }
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Download...", message: "0%", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            self.dataProvider.stopDownload()
+        }
+        alert.addAction(cancel)
+        //для того чтобы увеличить размеры алерт контроллера. обращаемся ко вью алерта!
+        let height = NSLayoutConstraint(item: alert.view as Any,
+                                        attribute: .height,
+                                        relatedBy: .equal,
+                                        toItem: nil,
+                                        attribute: .notAnAttribute,
+                                        multiplier: 0,
+                                        constant: 200)
+        //присваиваем созданный констрайнт к алерту
+        alert.view.addConstraint(height)
+        
+        present(alert, animated: true){
+            //тут можно создавать новые элементы внутри алерта
+            let size = CGSize(width: 40, height: 40)
+            let point = CGPoint(x: alert.view.frame.width/2 - size.width / 2, y: alert.view.frame.height/2 - size.height / 2)
+            let activityIndicator = UIActivityIndicatorView(frame: CGRect(origin: point, size: size))
+            activityIndicator.color = .blue
+            activityIndicator.startAnimating()
+            let progressView = UIProgressView(frame: CGRect(x: 0,
+                                                        y: alert.view.frame.height - 44,
+                                                        width: alert.view.frame.width,
+                                                        height: 5))
+            progressView.tintColor = .green
+            
+            self.dataProvider.total = { progress in
+                progressView.progress = Float(progress)
+                alert.message = String(Int(progress * 100)) + "%"
+                
+                if progressView.progress == 1 {
+                    alert.dismiss(animated: true, completion: nil)
+                }
+                
+            }
+            
+            alert.view.addSubview(activityIndicator)
+            alert.view.addSubview(progressView)
+        }
+        
     }
 
 }

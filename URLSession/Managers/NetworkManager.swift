@@ -65,4 +65,5 @@ class NetworkManager {
             }
         }.resume()
     }
+    //Upload image
 }

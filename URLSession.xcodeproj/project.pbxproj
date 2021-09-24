@@ -16,6 +16,7 @@
 		B861F71E26FCC615009F4794 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861F71D26FCC615009F4794 /* CollectionViewCell.swift */; };
 		B861F72126FCCB25009F4794 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861F72026FCCB25009F4794 /* ViewController.swift */; };
 		B861F72326FCCCA0009F4794 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861F72226FCCCA0009F4794 /* NetworkManager.swift */; };
+		B861F72626FE4DB5009F4794 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861F72526FE4DB5009F4794 /* DataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B861F71D26FCC615009F4794 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		B861F72026FCCB25009F4794 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B861F72226FCCCA0009F4794 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B861F72526FE4DB5009F4794 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B861F72226FCCCA0009F4794 /* NetworkManager.swift */,
+				B861F72526FE4DB5009F4794 /* DataProvider.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				B861F72326FCCCA0009F4794 /* NetworkManager.swift in Sources */,
 				B861F72126FCCB25009F4794 /* ViewController.swift in Sources */,
 				B861F71E26FCC615009F4794 /* CollectionViewCell.swift in Sources */,
+				B861F72626FE4DB5009F4794 /* DataProvider.swift in Sources */,
 				B861F71C26FCC608009F4794 /* CollectionViewController.swift in Sources */,
 				B861F70826FCC2A7009F4794 /* AppDelegate.swift in Sources */,
 				B861F70A26FCC2A7009F4794 /* SceneDelegate.swift in Sources */,
