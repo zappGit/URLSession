@@ -8,6 +8,8 @@
 import UIKit
 
 enum Buttons: String, CaseIterable {
+   case getAlamofire = "Get Alamo"
+    case postAlamofire = "Post Alamofore"
     case get = "Get"
     case post = "Post"
     case downloadImage = "Download Image"
@@ -50,7 +52,24 @@ class CollectionViewController: UICollectionViewController {
         case .downloadFile:
             dataProvider.startDownload()
             showAlert()
+        case .getAlamofire:
+            performSegue(withIdentifier: "posts", sender: self)
+        case .postAlamofire:
+            performSegue(withIdentifier: "postRequest", sender: self)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let tvc = segue.destination as? TableViewController
+        switch segue.identifier {
+        case "posts":
+            tvc?.getRequest()
+        case "postRequest":
+            tvc?.postRequest()
+        default:
+            break
+        }
+        
     }
     
     func showAlert() {

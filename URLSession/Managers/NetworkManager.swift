@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 class NetworkManager {
     
@@ -28,15 +29,15 @@ class NetworkManager {
         guard let urlString = URL(string: url) else { return }
         let session = URLSession.shared
         session.dataTask(with: urlString) { data, response, error in
-                guard let data = data, let response = response else { return }
-                print(data)
-                print(response)
-                do {
+            guard let data = data, let response = response else { return }
+            print(data)
+            print(response)
+            do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print (json)
-                } catch {
-                    print(error)
-                }
+                print (json)
+            } catch {
+                print(error)
+            }
         }.resume()
     }
     //Post data
@@ -65,5 +66,46 @@ class NetworkManager {
             }
         }.resume()
     }
-    //Upload image
+    //get reauest alamofire
+    static func getRequestAlamofire(url: String, complition: @escaping(([Post]) -> ())){
+        
+        guard let urlString = URL(string: url) else { return }
+        
+        AF.request(urlString).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                var posts = [Post]()
+                posts = Post.getArray(jsonArray: value)!
+                complition(posts)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    //post request alamofire
+    static func postRequestAlamofire(url: String, complition: @escaping(([Post]) -> ())) {
+        guard let urlString = URL(string: url) else { return }
+        
+        let params: [String: Any] = [
+            "title": "new post",
+            "body": "some news",
+            "userId": 10
+        ]
+        
+        AF.request(urlString, method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                guard let jsonPost = value as? [String:Any],
+                let post = Post(json: jsonPost)
+                else {return}
+                var posts = [Post]()
+                posts.append(post)
+                complition(posts)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
 }
